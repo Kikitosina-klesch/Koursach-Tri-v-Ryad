@@ -145,7 +145,7 @@ namespace Koursach_Tri_v_Ryad
             GameLog.TriVRyad();
 
             //score += GameLog.TriVRyad().Count * 5;
-            //totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(score);
+            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.score);
 
             Update();
         }

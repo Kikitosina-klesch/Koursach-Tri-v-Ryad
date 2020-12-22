@@ -17,7 +17,7 @@ namespace Koursach_Tri_v_Ryad
         int gamefield1 = -1;
         int gamefield2 = -1;
         bool gamefieldzamena;
-        int score;
+        public int score { get; set; }
 
         List<Element> SovpadEl = new List<Element>();
 
@@ -56,6 +56,7 @@ namespace Koursach_Tri_v_Ryad
                     if (row.Count() != 0)
                     {
                         TriVRyad();
+                        //FallCells();
                         score += row.Count() * 5;
                     }
 
@@ -183,7 +184,8 @@ namespace Koursach_Tri_v_Ryad
                 foreach (Element elem in SovpadEl)
                 {
                     elem.typeofpic = nulltipe;
-                }
+                    score += SovpadEl.Count() * 5;
+            }
             
 
             return SovpadEl;
