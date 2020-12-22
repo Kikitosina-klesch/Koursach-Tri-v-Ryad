@@ -26,6 +26,16 @@ namespace Koursach_Tri_v_Ryad
 
         public EventHandler Falled;
 
+        private void FallCellsss() 
+        {
+            while (Hasnullpic())
+            {
+                FallCells();
+                Falled(this, null);
+                Thread.Sleep(300);
+            }
+        }
+
         public GameLogic(Element[,] gamefield)
         {
             this.gamefield = gamefield;
@@ -85,11 +95,9 @@ namespace Koursach_Tri_v_Ryad
 
                     //gamefieldzamena = false;
 
-                    while (Hasnullpic())
-                    {
-                        FallCells();
-                        Falled(this, null);
-                    }
+                    Thread newThread = new Thread(new ThreadStart(FallCellsss));
+                    newThread.Start();
+
                 }              
             }
             //return TriVRyad();
@@ -193,7 +201,7 @@ namespace Koursach_Tri_v_Ryad
                 {
                     elem.typeofpic = nulltipe;
                     score += SovpadEl.Count() * 5;
-            }
+                }
             
 
             return SovpadEl;
