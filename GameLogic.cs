@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Koursach_Tri_v_Ryad
@@ -22,6 +23,8 @@ namespace Koursach_Tri_v_Ryad
         List<Element> SovpadEl = new List<Element>();
 
         Random rng = new Random();
+
+        public EventHandler Falled;
 
         public GameLogic(Element[,] gamefield)
         {
@@ -56,7 +59,6 @@ namespace Koursach_Tri_v_Ryad
                     if (row.Count() != 0)
                     {
                         TriVRyad();
-                        //FallCells();
                         score += row.Count() * 5;
                     }
 
@@ -82,6 +84,12 @@ namespace Koursach_Tri_v_Ryad
                     gamefield2 = -1;
 
                     //gamefieldzamena = false;
+
+                    while (Hasnullpic())
+                    {
+                        FallCells();
+                        Falled(this, null);
+                    }
                 }              
             }
             //return TriVRyad();
@@ -477,25 +485,14 @@ namespace Koursach_Tri_v_Ryad
 
         public bool Hasnullpic()
         {
-            bool hasnull = false;
-
-            for (int j = w - 1; j >= 0; j--)
+            for (int j = 0; j < w; j++)
             {
-                for (int i = w - 2; i >= 0; i--)
+                for (int i = 0; i < w; i++)
                 {
-                    if (gamefield[i + 1, j].typeofpic == nulltipe)
-                    {
-                        hasnull = true;
-                    }
-                    else
-                    {
-                        hasnull = false;
-                    }
-                    break;
+                    if (gamefield[i, j].typeofpic == nulltipe) return true;
                 }
-                break;
             }
-            return hasnull;
+            return false;
         }
 
         public void FallCells()

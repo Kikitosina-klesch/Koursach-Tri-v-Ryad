@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Koursach_Tri_v_Ryad
 {
@@ -58,6 +60,7 @@ namespace Koursach_Tri_v_Ryad
             unigrid.Margin = new Thickness(5, 5, 5, 5);
 
             GameLog = new GameLogic(elfield);
+            GameLog.Falled += Falled;
 
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < w; j++)
@@ -82,7 +85,13 @@ namespace Koursach_Tri_v_Ryad
             Update();
         }
 
-        void Update()
+        private void Falled(object sender, EventArgs args)
+        {
+            Dispatcher.BeginInvoke(new Action(() => Update()), DispatcherPriority.ContextIdle, null);
+            Thread.Sleep(500);
+        }
+
+            void Update()
         {
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < w; j++)
