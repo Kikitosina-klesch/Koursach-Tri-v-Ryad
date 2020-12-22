@@ -83,6 +83,7 @@ namespace Koursach_Tri_v_Ryad
             //    }
 
             Update();
+            GameLog.StartFall();
         }
 
         private void Falled(object sender, EventArgs args)

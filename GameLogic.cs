@@ -28,17 +28,35 @@ namespace Koursach_Tri_v_Ryad
 
         private void FallCellsss() 
         {
-            while (Hasnullpic())
+            TriVRyad();
+            if (Hasnullpic())
             {
-                FallCells();
-                Falled(this, null);
-                Thread.Sleep(300);
+                while (Hasnullpic())
+                {
+                    FallCells();
+                    Falled(this, null);
+                    Thread.Sleep(300);
+                }
+               
+                //Thread newThread = new Thread(new ThreadStart(FallCellsss));
+                //newThread.Start();
+
+                StartFall();
             }
+        }
+
+        public void StartFall()
+        {
+            Thread newThread = new Thread(new ThreadStart(FallCellsss));
+            newThread.Start();
         }
 
         public GameLogic(Element[,] gamefield)
         {
             this.gamefield = gamefield;
+
+            //Thread newThread = new Thread(new ThreadStart(FallCellsss));
+            //newThread.Start();
         }
 
         public int getScore()
@@ -81,11 +99,6 @@ namespace Koursach_Tri_v_Ryad
 
                 if (gamefieldzamena == true)
                 {
-                    //else
-                    //{
-                    //    gamefield[X, Y].typeofpic = gamefield1;
-                    //    gamefield[i, j].typeofpic = gamefield2;
-                    //}
 
                     X = -1;
                     Y = -1;
@@ -95,14 +108,14 @@ namespace Koursach_Tri_v_Ryad
 
                     //gamefieldzamena = false;
 
-                    Thread newThread = new Thread(new ThreadStart(FallCellsss));
-                    newThread.Start();
+                    //Thread newThread = new Thread(new ThreadStart(FallCellsss));
+                    //newThread.Start();
 
+                    StartFall();
                 }              
             }
             //return TriVRyad();
         }
-
         public List<Element> TriVRyad()
         {            
             SovpadEl.Clear();
@@ -194,8 +207,6 @@ namespace Koursach_Tri_v_Ryad
                     }
                 }
             }
-
-            
 
                 foreach (Element elem in SovpadEl)
                 {
@@ -506,7 +517,7 @@ namespace Koursach_Tri_v_Ryad
         public void FallCells()
         {
             int typeel = -1;
-
+            
             //bool hasnullpics = Hasnullpic();
 
             //while(hasnullpics == true)
@@ -535,8 +546,6 @@ namespace Koursach_Tri_v_Ryad
                     }
                 //hasnullpics = Hasnullpic();
             //}
-            
-                
         }
     }
 }
