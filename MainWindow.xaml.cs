@@ -27,32 +27,26 @@ namespace Koursach_Tri_v_Ryad
         
         BitmapImage[] typedpic = new BitmapImage[] 
         {
-
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/0.png", UriKind.Absolute)),
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/1.png", UriKind.Absolute)),
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/2.png", UriKind.Absolute)),
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/3.png", UriKind.Absolute)),
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/4.png", UriKind.Absolute)),
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/5.png", UriKind.Absolute)),
-
         };
 
         Element[,] elfield = new Element[w, w];
-
         GameLogic GameLog;
-
         Random rng = new Random();
-
         const int w = 8;
         const int nulltipe = -99;
-        int score;
-
+        
         public MainWindow()
         {
             InitializeComponent();
 
             unigrid.Rows = w;
-            unigrid.Columns = w; 
+            unigrid.Columns = w;
 
             unigrid.Width = w * (bSize + 4);
             unigrid.Height = w * (bSize + 4);
@@ -60,7 +54,6 @@ namespace Koursach_Tri_v_Ryad
             unigrid.Margin = new Thickness(5, 5, 5, 5);
 
             GameLog = new GameLogic(elfield);
-            GameLog.Falled += Falled;
 
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < w; j++)
@@ -69,21 +62,9 @@ namespace Koursach_Tri_v_Ryad
                     StackPanel stackPanel = new StackPanel();
                     //stackPanel.Children.Add(pic);
                     stackPanel.Margin = new Thickness(1);
-                    elfield[i, j].b.Click += Btn_Click;    
+                    elfield[i, j].b.Click += Btn_Click;
                     unigrid.Children.Add(elfield[i, j].b);
                 }
-
-            //GameLog.TriVRyad();
-            
-            //for (int j = w - 1; j >= 0; j--)
-            //    for (int i = w - 2; i >= 0; i--)
-            //    {
-            //        if (elfield[i, j].typeofb == 9)
-            //            GameLog.FallCells();
-            //    }
-
-            Update();
-            GameLog.StartFall();
         }
 
         private void Falled(object sender, EventArgs args)
@@ -100,8 +81,7 @@ namespace Koursach_Tri_v_Ryad
                 for (int j = 0; j < w; j++)
                 {         
                     StackPanel stack = new StackPanel();
-                    //stack.Children.Add(elfield[i, j].setType());
-
+                   
                     int typeel = elfield[i, j].typeofpic;
                     if(typeel != nulltipe)
                     {
@@ -112,14 +92,7 @@ namespace Koursach_Tri_v_Ryad
                     elfield[i, j].b.Content = stack;
                 }
 
-            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
-            //GameLog.TriVRyad();
-            //for (int j = w - 1; j >= 0; j--)
-            //    for (int i = w - 2; i >= 0; i--)
-            //    {
-            //        if (elfield[i, j].typeofb == 9)
-            //            GameLog.FallCells();
-            //    }
+            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());           
         }
 
         StackPanel getPanel(BitmapImage picture)
@@ -142,7 +115,6 @@ namespace Koursach_Tri_v_Ryad
 
             GameLog.moveCell(i, j);
 
-            //score += GameLog.moveCell(i, j).Count * 5;
             totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
 
             Update();
@@ -150,14 +122,15 @@ namespace Koursach_Tri_v_Ryad
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-           
+            GameLog.Falled += Falled;
+            Update();
+            GameLog.StartFall();
         }
 
         private void TriDyad_Click(object sender, RoutedEventArgs e)
         {
             GameLog.TriVRyad();
 
-            //score += GameLog.TriVRyad().Count * 5;
             totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
 
             Update();

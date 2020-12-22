@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Koursach_Tri_v_Ryad
 {
@@ -15,6 +16,9 @@ namespace Koursach_Tri_v_Ryad
 
         const int w = 8;
         const int nulltipe = -99;
+        const int moves = 10;
+
+        int movesleft = moves;
         int gamefield1 = -1;
         int gamefield2 = -1;
         bool gamefieldzamena;
@@ -37,10 +41,6 @@ namespace Koursach_Tri_v_Ryad
                     Falled(this, null);
                     Thread.Sleep(300);
                 }
-               
-                //Thread newThread = new Thread(new ThreadStart(FallCellsss));
-                //newThread.Start();
-
                 StartFall();
             }
         }
@@ -54,9 +54,6 @@ namespace Koursach_Tri_v_Ryad
         public GameLogic(Element[,] gamefield)
         {
             this.gamefield = gamefield;
-
-            //Thread newThread = new Thread(new ThreadStart(FallCellsss));
-            //newThread.Start();
         }
 
         public int getScore()
@@ -66,6 +63,7 @@ namespace Koursach_Tri_v_Ryad
 
         public void moveCell(int i, int j)
         {
+            
             SovpadEl.Clear();            
 
             if ((X == -1) && (Y == -1))
@@ -87,7 +85,7 @@ namespace Koursach_Tri_v_Ryad
                     if (row.Count() != 0)
                     {
                         TriVRyad();
-                        //score += row.Count() * 5;
+                        movesleft--;
                     }
 
                     gamefieldzamena = true;
@@ -107,7 +105,23 @@ namespace Koursach_Tri_v_Ryad
                     gamefield2 = -1;
                     
                     StartFall();
-                }              
+                }
+            }
+
+            if (movesleft == 0)
+            {
+                MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + score);
+                score = 0;
+
+                for (int x = 0; x < w; x++)
+                {
+                    for (int y = 0; y < w; y++)
+                    {
+                        gamefield[x, y].typeofpic = nulltipe;
+                    }
+                }
+
+                movesleft = moves;
             }
         }
         public List<Element> TriVRyad()
@@ -121,8 +135,7 @@ namespace Koursach_Tri_v_Ryad
 
             for (int i = 0; i < w; i++)
             {
-                count = 0;
-                //el = gamefield[0, 0];
+                count = 0;                
                 for (int j = 0; j < w; j++)
                 {
                     if (count == 0)
@@ -134,7 +147,6 @@ namespace Koursach_Tri_v_Ryad
                     {
                         if (gamefield[i, j].typeofpic == el.typeofpic)
                         {
-                            //SovpadEl.Add(el);
                             el1 = gamefield[i, j];
                             count++;
                         }
@@ -205,296 +217,11 @@ namespace Koursach_Tri_v_Ryad
                 foreach (Element elem in SovpadEl)
                 {
                     elem.typeofpic = nulltipe;
-                    
                 }
 
             score += SovpadEl.Count() * 5;
 
             return SovpadEl;
-
-            #region Попытка реализации поиска и удаления похожих элементов
-            //for (int i = 0; i < w; i++)
-            //{
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        LineX[j] = gamefield[i, j];
-            //    }
-
-            //    int count = 0;
-
-            //    for (int x = 0; x < w; x++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = LineX[x];
-            //            m = LineX[x].typeofb;
-            //            count++;
-            //        }
-            //        else if (count < 3)
-            //        {
-            //            if (m == LineX[x].typeofb)
-            //            {
-            //                count++;
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(LineX[x]);
-            //            }
-            //            else
-            //            {
-            //                count = 1;
-            //                m = LineX[x].typeofb;
-            //                el = LineX[x];
-            //            }
-            //        }
-            //        else if (count > 2)
-            //        {
-            //            if (m == LineX[x].typeofb)
-            //            {
-            //                m = LineX[x].typeofb;
-            //                SovpadEl.Add(LineX[x]);
-            //            }
-            //        }
-            //    }
-            //}
-
-            //for (int j = 0; j < w; j++)
-            //{
-            //    for (int i = 0; i < w; i++)
-            //    {
-            //        LineY[i] = gamefield[i, j];
-            //    }
-
-            //    int count = 0;
-
-            //    for (int x = 0; x < w; x++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = LineY[x];
-            //            m = LineY[x].typeofb;
-            //            count++;
-            //        }
-            //        else if (count < 3)
-            //        {
-            //            if (m == LineY[x].typeofb)
-            //            {
-            //                count++;
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(LineY[x]);
-            //            }
-            //            else
-            //            {
-            //                count = 1;
-            //                m = LineY[x].typeofb;
-            //                el = LineY[x];
-            //            }
-            //        }
-            //        else if (count > 2)
-            //        {
-            //            if (m == LineY[x].typeofb)
-            //            {
-            //                m = LineY[x].typeofb;
-            //                SovpadEl.Add(LineY[x]);
-            //            }
-            //        }
-            //    }
-            //}
-            //foreach (Element elementS in SovpadEl)
-            //    elementS.typeofb = 9;
-            #endregion
-
-            #region Попытка реализации № 2
-            //for (int i = 0; i < w; i++)
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            count = 1;
-            //            m = gamefield[i, j].typeofb;
-            //        }
-            //        if ((count > 0) && (count < 2))
-            //        {
-            //            if (m == gamefield[i, j].typeofb)
-            //            {
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                SovpadEl.Add(gamefield[i + 1, j + 1]);
-            //                SovpadEl.Add(gamefield[i + 2, j + 2]);
-            //            }
-            //        }
-
-
-            //    }
-            #endregion
-
-            #region Попытка №3
-            //for (int i = 0; i < w; i++)
-            //{
-            //    int count = 0;
-
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            m = el.typeofb;
-            //            count = 1;
-            //        }
-            //        if ((count > 0)&&(count < 2))
-            //        {
-            //            if (el.typeofb == gamefield[i, j].typeofb)
-            //            {
-            //                count++;
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                el = gamefield[i, j];
-            //            }
-            //            else
-            //            {
-            //                count = 1;
-            //                m = gamefield[i, j].typeofb;
-            //                el = gamefield[i, j];
-            //            }
-            //        }
-            //        if (count > 2)
-            //        {
-            //            if (el.typeofb == gamefield[i, j].typeofb)
-            //            {
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                el = gamefield[i, j];
-            //            }
-
-            //        }
-            //    }
-
-            //}
-
-            //for (int j = 0; j < w; j++)
-            //{
-            //    int count = 0;
-
-            //    for (int i = 0; i < w; i++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            //m = el.typeofb;
-            //            count = 1;
-            //        }
-            //        if ((count > 0) && (count < 2))
-            //        {
-            //            if (el.typeofb == gamefield[i, j].typeofb)
-            //            {
-            //                count++;
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                el = gamefield[i, j];
-            //            }
-            //            else
-            //            {
-            //                count = 1;
-            //                //m = gamefield[i, j].typeofb;
-            //                el = gamefield[i, j];
-            //            }
-            //        }
-            //        if (count > 2)
-            //        {
-            //            if (el.typeofb == gamefield[i, j].typeofb)
-            //            {
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                el = gamefield[i, j];
-            //            }
-
-            //        }
-            //    }
-
-            //}
-            //foreach (Element elementS in SovpadEl)
-            //    elementS.typeofb = 9;
-            #endregion
-
-            #region Попытка 4 аааааааааааа
-            //for (int i = 0; i < w; i++)
-            //{
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            m = gamefield[i, j].typeofb;
-            //            count = 1;
-            //        }
-            //        else if ((count != 0) && (count < 3))
-            //        {
-            //            if (m == gamefield[i, j].typeofb)
-            //            {
-            //                count++;
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(gamefield[i, j]);
-            //                el = gamefield[i, j];
-            //            }
-            //            else
-            //            {
-            //                count = 1;
-            //                m = gamefield[i, j].typeofb;
-            //                el = gamefield[i, j];
-            //            }
-            //        }
-            //        else if (count > 2)
-            //        {
-            //            if (m == gamefield[i, j].typeofb)
-            //            {
-            //                //m = gamefield[i, j].typeofb;
-            //                SovpadEl.Add(gamefield[i, j]);
-            //            }
-            //        }
-            //    }
-
-            //    count = 0;
-            //    m = -1;
-
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        for (int i1 = 0; i1 < w; i1++)
-            //        {
-            //            if (count == 0)
-            //            {
-            //                el = gamefield[i1, j];
-            //                m = gamefield[i1, j].typeofb;
-            //                count = 1;
-            //            }
-            //            else if ((count != 0) && (count < 3))
-            //            {
-            //                if (m == gamefield[i1, j].typeofb)
-            //                {
-            //                    count++;
-            //                    SovpadEl.Add(el);
-            //                    SovpadEl.Add(gamefield[i1, j]);
-            //                    el = gamefield[i1, j];
-            //                }
-            //                else
-            //                {
-            //                    count = 1;
-            //                    m = gamefield[i1, j].typeofb;
-            //                    el = gamefield[i1, j];
-            //                }
-            //            }
-            //            else if (count > 2)
-            //            {
-            //                if (m == gamefield[i1, j].typeofb)
-            //                {
-            //                    //m = gamefield[i, j].typeofb;
-            //                    SovpadEl.Add(gamefield[i1, j]);
-            //                }
-            //            }
-            //        }
-            //        count = 0;
-            //        m = -1;
-            //    }
-            //}
-
-            //foreach (Element elementS in SovpadEl)
-            //    elementS.typeofb = 9;
-            #endregion
         }
 
         public bool Hasnullpic()
@@ -513,10 +240,6 @@ namespace Koursach_Tri_v_Ryad
         {
             int typeel = -1;
             
-            //bool hasnullpics = Hasnullpic();
-
-            //while(hasnullpics == true)
-            //{
                 for (int j = w - 1; j >= 0; j--)
                 {
                     for (int i = w - 2; i >= 0; i--)
@@ -539,8 +262,6 @@ namespace Koursach_Tri_v_Ryad
                         }
                         break;
                     }
-                //hasnullpics = Hasnullpic();
-            //}
         }
     }
 }

@@ -14,7 +14,7 @@
         <Button x:Name="Start" Content="Start game!!!" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Start_Click"/>
         <Button x:Name="TriDyad" Content="OPA, Ryad!1" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="100" Click="TriDyad_Click" Height="40"/>
         <Button x:Name="Fall" Content="Fall and Generate" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="100" Height="35" Click="Fall_Click"/>
-        <ListBox HorizontalAlignment="Left" Height="425" Margin="840,20,0,0" VerticalAlignment="Top" Width="200"/>
+        <ListBox x:Name="Rate" HorizontalAlignment="Left" Height="425" Margin="840,20,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="totalscore" Content="ВАШ СЧЕТ: " HorizontalAlignment="Left" Margin="320,42,0,0" VerticalAlignment="Top" Width="320"/>
 
     </Grid>
