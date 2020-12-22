@@ -87,7 +87,7 @@ namespace Koursach_Tri_v_Ryad
                     if (row.Count() != 0)
                     {
                         TriVRyad();
-                        score += row.Count() * 5;
+                        //score += row.Count() * 5;
                     }
 
                     gamefieldzamena = true;
@@ -105,16 +105,10 @@ namespace Koursach_Tri_v_Ryad
 
                     gamefield1 = -1;
                     gamefield2 = -1;
-
-                    //gamefieldzamena = false;
-
-                    //Thread newThread = new Thread(new ThreadStart(FallCellsss));
-                    //newThread.Start();
-
+                    
                     StartFall();
                 }              
             }
-            //return TriVRyad();
         }
         public List<Element> TriVRyad()
         {            
@@ -211,9 +205,10 @@ namespace Koursach_Tri_v_Ryad
                 foreach (Element elem in SovpadEl)
                 {
                     elem.typeofpic = nulltipe;
-                    score += SovpadEl.Count() * 5;
+                    
                 }
-            
+
+            score += SovpadEl.Count() * 5;
 
             return SovpadEl;
 

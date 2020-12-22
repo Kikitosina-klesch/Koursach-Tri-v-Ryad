@@ -92,8 +92,6 @@ namespace Koursach_Tri_v_Ryad
             {
                 Update();
             });
-
-            
         }
 
         void Update()
@@ -114,6 +112,7 @@ namespace Koursach_Tri_v_Ryad
                     elfield[i, j].b.Content = stack;
                 }
 
+            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
             //GameLog.TriVRyad();
             //for (int j = w - 1; j >= 0; j--)
             //    for (int i = w - 2; i >= 0; i--)
@@ -144,7 +143,7 @@ namespace Koursach_Tri_v_Ryad
             GameLog.moveCell(i, j);
 
             //score += GameLog.moveCell(i, j).Count * 5;
-            //totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(score);
+            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
 
             Update();
         }
@@ -159,7 +158,7 @@ namespace Koursach_Tri_v_Ryad
             GameLog.TriVRyad();
 
             //score += GameLog.TriVRyad().Count * 5;
-            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.score);
+            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
 
             Update();
         }
