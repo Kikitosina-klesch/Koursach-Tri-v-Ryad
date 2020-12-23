@@ -15,7 +15,11 @@
         <Button x:Name="TriDyad" Content="OPA, Ryad!1" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="100" Click="TriDyad_Click" Height="40"/>
         <Button x:Name="Fall" Content="Fall and Generate" HorizontalAlignment="Left" Margin="20,140,0,0" VerticalAlignment="Top" Width="100" Height="35" Click="Fall_Click"/>
         <ListBox x:Name="Rate" HorizontalAlignment="Left" Height="425" Margin="840,20,0,0" VerticalAlignment="Top" Width="200"/>
-        <Label x:Name="totalscore" Content="ВАШ СЧЕТ: " HorizontalAlignment="Left" Margin="320,42,0,0" VerticalAlignment="Top" Width="320"/>
+        <Label x:Name="totalscore" Content="" HorizontalAlignment="Left" Margin="370,42,0,0" VerticalAlignment="Top" Width="245"/>
+        <Button x:Name="NameChange" Content="Change da Name" HorizontalAlignment="Left" Margin="20,200,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="NameChange_Click"/>
+        <Label x:Name="Player" Content="Вы играете за: " HorizontalAlignment="Left" Margin="160,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Width="135"/>
+        <Label Content="ВАШ СЧЕТ:" HorizontalAlignment="Left" Margin="295,42,0,0" VerticalAlignment="Top" Width="70"/>
+        <Button x:Name="Sell" Content="Send the result" HorizontalAlignment="Left" Margin="840,465,0,0" VerticalAlignment="Top" Width="200" Height="40" Click="Sell_Click"/>
 
     </Grid>
 </Window>

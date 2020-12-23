@@ -37,12 +37,22 @@ namespace Koursach_Tri_v_Ryad
 
         Element[,] elfield = new Element[w, w];
         GameLogic GameLog;
+        List<string> names = new List<string>();
         Random rng = new Random();
         const int w = 8;
         const int nulltipe = -99;
         
+
+        int x;
+
+        Player p;
+        List<Player> ratelist = new List<Player>();
+        List<int> scorelist = new List<int>();
+
+
         public MainWindow()
         {
+            
             InitializeComponent();
 
             unigrid.Rows = w;
@@ -58,13 +68,18 @@ namespace Koursach_Tri_v_Ryad
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < w; j++)
                 {
-                    elfield[i, j] = new Element(rng.Next(0, 6), i + j * w);
-                    StackPanel stackPanel = new StackPanel();
-                    //stackPanel.Children.Add(pic);
+                    elfield[i, j] = new Element(nulltipe, i + j * w);
+                    StackPanel stackPanel = new StackPanel();                   
                     stackPanel.Margin = new Thickness(1);
                     elfield[i, j].b.Click += Btn_Click;
                     unigrid.Children.Add(elfield[i, j].b);
                 }
+        }
+
+
+        private void Sort(List<int> scores)
+        {
+
         }
 
         private void Falled(object sender, EventArgs args)
@@ -76,7 +91,7 @@ namespace Koursach_Tri_v_Ryad
         }
 
         void Update()
-        {
+        {            
             for (int i = 0; i < w; i++)
                 for (int j = 0; j < w; j++)
                 {         
@@ -92,7 +107,7 @@ namespace Koursach_Tri_v_Ryad
                     elfield[i, j].b.Content = stack;
                 }
 
-            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());           
+            totalscore.Content = Convert.ToString(GameLog.getScore() - 1440);
         }
 
         StackPanel getPanel(BitmapImage picture)
@@ -115,23 +130,25 @@ namespace Koursach_Tri_v_Ryad
 
             GameLog.moveCell(i, j);
 
-            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
+            totalscore.Content = Convert.ToString(GameLog.getScore() - 1440);
 
             Update();
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
+            GameLog.GameSetScore(0);
             GameLog.Falled += Falled;
             Update();
             GameLog.StartFall();
+            
         }
 
         private void TriDyad_Click(object sender, RoutedEventArgs e)
         {
             GameLog.TriVRyad();
 
-            totalscore.Content = "ВАШ СЧЕТ: " + Convert.ToString(GameLog.getScore());
+            totalscore.Content =Convert.ToString(GameLog.getScore() -1440);
 
             Update();
         }
@@ -141,6 +158,38 @@ namespace Koursach_Tri_v_Ryad
             GameLog.FallCells();
 
             Update();
+        }
+
+        private void NameChange_Click(object sender, RoutedEventArgs e)
+        {
+            AddName win2 = new AddName();
+            if (win2.ShowDialog() == true)
+            {
+
+
+                p = new Player(win2.Name.Text, 0);
+                Player.Content = "Вы играете за: " + p.getName();
+            }
+
+        }
+
+        
+
+        private void Sell_Click(object sender, RoutedEventArgs e)
+        {
+            Rate.Items.Clear();
+            p.setScore(Convert.ToInt32(totalscore.Content));
+            
+            ratelist.Add(p);
+            //ratelist.Sort();
+
+            var sortedPlayers = from r in ratelist
+                              orderby r.score descending
+                              select r;
+
+            //scorelist.Add(p.score);
+            foreach(Player p in sortedPlayers)
+                Rate.Items.Add(p.name + ":     " + p.score);
         }
     }
 }

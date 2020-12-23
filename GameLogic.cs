@@ -16,15 +16,25 @@ namespace Koursach_Tri_v_Ryad
 
         const int w = 8;
         const int nulltipe = -99;
-        const int moves = 10;
+        const int moves = 3;
+        public bool endgame { get; set; }
 
-        int movesleft = moves;
+        public int movesleft = moves;
         int gamefield1 = -1;
         int gamefield2 = -1;
         bool gamefieldzamena;
         public int score { get; set; }
+        public int finalscore { get; set; }
+
+        Player p;
+
+        public void GameSetScore(int score)
+        {
+            this.score = score;
+        }
 
         List<Element> SovpadEl = new List<Element>();
+        //public List<string> names { get; set; }
 
         Random rng = new Random();
 
@@ -32,6 +42,7 @@ namespace Koursach_Tri_v_Ryad
 
         private void FallCellsss() 
         {
+            //endgame = false;
             TriVRyad();
             if (Hasnullpic())
             {
@@ -42,7 +53,30 @@ namespace Koursach_Tri_v_Ryad
                     Thread.Sleep(300);
                 }
                 StartFall();
+               
             }
+            else
+            {
+                if (movesleft == 0)
+                {
+                    //endgame = true;
+                    MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - 1440));
+                    //p.setScore(score - 1440);
+                    score = 1440;
+
+                    for (int x = 0; x < w; x++)
+                    {
+                        for (int y = 0; y < w; y++)
+                        {
+                            gamefield[x, y].typeofpic = nulltipe;
+                        }
+                    }
+
+                    movesleft = moves;
+                }
+            }
+
+            
         }
 
         public void StartFall()
@@ -59,6 +93,11 @@ namespace Koursach_Tri_v_Ryad
         public int getScore()
         {
             return score;
+        }
+
+        public int getMovesLeft()
+        {
+            return movesleft;
         }
 
         public void moveCell(int i, int j)
@@ -108,21 +147,7 @@ namespace Koursach_Tri_v_Ryad
                 }
             }
 
-            if (movesleft == 0)
-            {
-                MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + score);
-                score = 0;
-
-                for (int x = 0; x < w; x++)
-                {
-                    for (int y = 0; y < w; y++)
-                    {
-                        gamefield[x, y].typeofpic = nulltipe;
-                    }
-                }
-
-                movesleft = moves;
-            }
+            
         }
         public List<Element> TriVRyad()
         {            
@@ -213,7 +238,6 @@ namespace Koursach_Tri_v_Ryad
                     }
                 }
             }
-
                 foreach (Element elem in SovpadEl)
                 {
                     elem.typeofpic = nulltipe;
