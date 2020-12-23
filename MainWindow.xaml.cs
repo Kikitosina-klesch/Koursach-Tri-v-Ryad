@@ -166,7 +166,7 @@ namespace Koursach_Tri_v_Ryad
                 {
                     GameLog.GameSetScore(0);
                     p = new Player(win2.Name.Text, 0);
-                    Player.Content = "Вы играете за: " + p.getName();
+                    PlayerName.Content = "Вы играете за: " + p.getName();
                 }               
             }
         }
