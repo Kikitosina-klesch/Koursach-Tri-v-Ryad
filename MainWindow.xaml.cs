@@ -23,8 +23,6 @@ namespace Koursach_Tri_v_Ryad
     public partial class MainWindow : Window
     {
         int bSize = 60;
-
-        
         BitmapImage[] typedpic = new BitmapImage[] 
         {
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/0.png", UriKind.Absolute)),
@@ -41,15 +39,10 @@ namespace Koursach_Tri_v_Ryad
         Random rng = new Random();
         const int w = 8;
         const int nulltipe = -99;
-        
-
-        int x;
 
         Player p;
         List<Player> ratelist = new List<Player>();
         List<int> scorelist = new List<int>();
-
-
         public MainWindow()
         {
             
@@ -75,13 +68,6 @@ namespace Koursach_Tri_v_Ryad
                     unigrid.Children.Add(elfield[i, j].b);
                 }
         }
-
-
-        private void Sort(List<int> scores)
-        {
-
-        }
-
         private void Falled(object sender, EventArgs args)
         {
             Application.Current.Dispatcher.Invoke(delegate
@@ -162,19 +148,25 @@ namespace Koursach_Tri_v_Ryad
 
         private void NameChange_Click(object sender, RoutedEventArgs e)
         {
+            bool proverka =true;
             AddName win2 = new AddName();
             if (win2.ShowDialog() == true)
             {
+                
+                foreach (Player pl in ratelist)
+                    if (win2.Name.Text == pl.name)
+                    {
+                        MessageBox.Show("Это имя уже занято >:(");
 
-
-                p = new Player(win2.Name.Text, 0);
-                Player.Content = "Вы играете за: " + p.getName();
+                        proverka = false;
+                    }
+                if (proverka == true)
+                {
+                    p = new Player(win2.Name.Text, 0);
+                    Player.Content = "Вы играете за: " + p.getName();
+                }               
             }
-
         }
-
-        
-
         private void Sell_Click(object sender, RoutedEventArgs e)
         {
             Rate.Items.Clear();

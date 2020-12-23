@@ -53,15 +53,12 @@ namespace Koursach_Tri_v_Ryad
                     Thread.Sleep(300);
                 }
                 StartFall();
-               
             }
             else
             {
                 if (movesleft == 0)
                 {
-                    //endgame = true;
                     MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - 1440));
-                    //p.setScore(score - 1440);
                     score = 1440;
 
                     for (int x = 0; x < w; x++)
@@ -75,8 +72,6 @@ namespace Koursach_Tri_v_Ryad
                     movesleft = moves;
                 }
             }
-
-            
         }
 
         public void StartFall()
