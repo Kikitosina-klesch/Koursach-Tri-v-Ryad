@@ -40,12 +40,15 @@ namespace Koursach_Tri_v_Ryad
         const int w = 8;
         const int nulltipe = -99;
 
+        JsonSaveLoadProgress j = new JsonSaveLoadProgress();
+
         Player p;
         List<Player> ratelist = new List<Player>();
         List<int> scorelist = new List<int>();
         public MainWindow()
         {
-            
+            ratelist.Clear();
+
             InitializeComponent();
 
             unigrid.Rows = w;
@@ -123,11 +126,10 @@ namespace Koursach_Tri_v_Ryad
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            GameLog.GameSetScore(0);
-            GameLog.Falled += Falled;
-            Update();
-            GameLog.StartFall();
-            
+                GameLog.GameSetScore(0);
+                GameLog.Falled += Falled;
+                Update();
+                GameLog.StartFall();
         }
 
         private void TriDyad_Click(object sender, RoutedEventArgs e)
@@ -162,25 +164,45 @@ namespace Koursach_Tri_v_Ryad
                     }
                 if (proverka == true)
                 {
+                    GameLog.GameSetScore(0);
                     p = new Player(win2.Name.Text, 0);
                     Player.Content = "Вы играете за: " + p.getName();
                 }               
             }
         }
-        private void Sell_Click(object sender, RoutedEventArgs e)
+
+        private void Send_Click(object sender, RoutedEventArgs e)
         {
             Rate.Items.Clear();
             p.setScore(Convert.ToInt32(totalscore.Content));
-            
+
             ratelist.Add(p);
             //ratelist.Sort();
 
             var sortedPlayers = from r in ratelist
-                              orderby r.score descending
-                              select r;
+                                orderby r.score descending
+                                select r;
 
             //scorelist.Add(p.score);
-            foreach(Player p in sortedPlayers)
+            foreach (Player p in sortedPlayers)
+                Rate.Items.Add(p.name + ":     " + p.score);
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            j.SaveFile(ratelist);
+        }
+
+        private void Load_Click_1(object sender, RoutedEventArgs e)
+        {
+            ratelist = j.LoadFile();
+
+            var sortedPlayers = from r in ratelist
+                                orderby r.score descending
+                                select r;
+
+            //scorelist.Add(p.score);
+            foreach (Player p in sortedPlayers)
                 Rate.Items.Add(p.name + ":     " + p.score);
         }
     }
