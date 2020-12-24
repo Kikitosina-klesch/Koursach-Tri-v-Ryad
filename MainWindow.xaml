@@ -8,7 +8,7 @@
         Title="Three in Row" Height="762" Width="1074">
     <Grid>
 
-        <UniformGrid x:Name="unigrid" Margin="160,80,266,91">
+        <UniformGrid x:Name="unigrid" Margin="160,120,266,91">
 
         </UniformGrid>
         <Button x:Name="Start" Content="Start game!!!" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Start_Click"/>
@@ -20,6 +20,7 @@
         <Button x:Name="Send" Content="Send the result" HorizontalAlignment="Left" Margin="840,465,0,0" VerticalAlignment="Top" Width="200" Height="40" Click="Send_Click"/>
         <Button x:Name="Save" Content="Save Game" HorizontalAlignment="Left" Margin="20,305,0,0" VerticalAlignment="Top" Width="100" Height="55" Click="Save_Click"/>
         <Button x:Name="Load" Content="Load Game" HorizontalAlignment="Left" Margin="20,365,0,0" VerticalAlignment="Top" Width="100" Height="60" Click="Load_Click_1"/>
+        <Label x:Name="Lefthod" Content="ОСТАЛОСЬ ХОДОВ:" HorizontalAlignment="Left" Margin="395,80,0,0" VerticalAlignment="Top" Width="200"/>
 
     </Grid>
 </Window>

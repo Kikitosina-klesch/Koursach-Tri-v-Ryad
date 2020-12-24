@@ -98,6 +98,7 @@ namespace Koursach_Tri_v_Ryad
                 }
 
             totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
+            Lefthod.Content = "ОСТАЛОСЬ ХОДОВ: " + GameLog.movesleft;
         }
 
         StackPanel getPanel(BitmapImage picture)
@@ -121,6 +122,7 @@ namespace Koursach_Tri_v_Ryad
             GameLog.moveCell(i, j);
 
             totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
+            
 
             Update();
         }

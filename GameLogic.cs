@@ -119,9 +119,9 @@ namespace Koursach_Tri_v_Ryad
                     if (row.Count() != 0)
                     {
                         TriVRyad();
-                        movesleft--;
+                       
                     }
-
+                    movesleft--;
                     gamefieldzamena = true;
                 }
                 else
