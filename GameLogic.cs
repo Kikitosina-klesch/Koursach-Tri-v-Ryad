@@ -17,7 +17,7 @@ namespace Koursach_Tri_v_Ryad
         const int w = 8;
         const int nulltipe = -99;
         const int blocktype = -88;
-        const int moves = 3;
+        const int moves = 10;
         public bool endgame { get; set; }
 
         public int movesleft = moves;

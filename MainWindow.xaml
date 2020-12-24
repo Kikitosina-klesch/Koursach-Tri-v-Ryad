@@ -12,7 +12,7 @@
 
         </UniformGrid>
         <Button x:Name="Start" Content="Start game!!!" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Start_Click"/>
-        <ListBox x:Name="Rate" HorizontalAlignment="Left" Height="425" Margin="840,20,0,0" VerticalAlignment="Top" Width="200"/>
+        <ListBox x:Name="Rate" HorizontalAlignment="Left" Height="425" Margin="840,80,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="totalscore" Content="" HorizontalAlignment="Left" Margin="470,42,0,0" VerticalAlignment="Top" Width="245"/>
         <Button x:Name="NameChange" Content="Set da Name" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="NameChange_Click"/>
         <Label x:Name="PlayerName" Content="Вы играете за: " HorizontalAlignment="Left" Margin="160,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Width="230"/>
@@ -21,6 +21,7 @@
         <Button x:Name="Save" Content="Save Game" HorizontalAlignment="Left" Margin="20,305,0,0" VerticalAlignment="Top" Width="100" Height="55" Click="Save_Click"/>
         <Button x:Name="Load" Content="Load Game" HorizontalAlignment="Left" Margin="20,365,0,0" VerticalAlignment="Top" Width="100" Height="60" Click="Load_Click_1"/>
         <Label x:Name="Lefthod" Content="ОСТАЛОСЬ ХОДОВ:" HorizontalAlignment="Left" Margin="395,80,0,0" VerticalAlignment="Top" Width="200"/>
+        <Label Content="ТАБЛИЦА РЕКОРДОВ:" HorizontalAlignment="Left" Margin="840,42,0,0" VerticalAlignment="Top" Width="140"/>
 
     </Grid>
 </Window>
