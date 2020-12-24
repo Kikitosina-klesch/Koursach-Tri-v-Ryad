@@ -150,22 +150,7 @@ namespace Koursach_Tri_v_Ryad
                
         }
 
-        private void TriDyad_Click(object sender, RoutedEventArgs e)
-        {
-            GameLog.TriVRyad();
-
-            totalscore.Content =Convert.ToString(GameLog.getScore() - missscore);
-
-            Update();
-        }
-
-        private void Fall_Click(object sender, RoutedEventArgs e)
-        {            
-            GameLog.FallCells();
-
-            Update();
-        }
-
+        
         private void NameChange_Click(object sender, RoutedEventArgs e)
         {
             bool proverka =true;

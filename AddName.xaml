@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Koursach_Tri_v_Ryad"
         mc:Ignorable="d"
-        Title="AddName" Height="262" Width="489">
+        Title="AddName" Height="187" Width="489">
     <Grid>
         <Label Content="Введите Ваше имечко:" HorizontalAlignment="Left" Margin="22,34,0,0" VerticalAlignment="Top" Width="138"/>
         <TextBox x:Name="Name" HorizontalAlignment="Left" Height="26" Margin="180,34,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="220"/>
-        <Button x:Name="OK" Content="OK" HorizontalAlignment="Left" Margin="205,160,0,0" VerticalAlignment="Top" Width="75" Height="40" Click="OK_Click"/>
+        <Button x:Name="OK" Content="OK" HorizontalAlignment="Left" Margin="200,80,0,0" VerticalAlignment="Top" Width="80" Height="40" Click="OK_Click"/>
 
     </Grid>
 </Window>

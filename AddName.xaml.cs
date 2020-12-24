@@ -29,8 +29,6 @@ namespace Koursach_Tri_v_Ryad
         private void OK_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = true;
-
-            //GameLog.names.Add(Name.Text);
         }
     }
 }
