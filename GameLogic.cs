@@ -25,7 +25,7 @@ namespace Koursach_Tri_v_Ryad
         bool gamefieldzamena;
         public int score { get; set; }
         public int finalscore { get; set; }
-
+        const int missscore = 5 * ((w - 2) * 3 * 8 * 2);
         Player p;
 
         public void GameSetScore(int score)
@@ -58,7 +58,7 @@ namespace Koursach_Tri_v_Ryad
             {
                 if (movesleft == 0)
                 {
-                    MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - 1440));
+                    MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - missscore));
                     score = 1440;
 
                     for (int x = 0; x < w; x++)

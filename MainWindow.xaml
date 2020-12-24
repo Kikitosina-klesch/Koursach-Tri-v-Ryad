@@ -14,7 +14,7 @@
         <Button x:Name="Start" Content="Start game!!!" HorizontalAlignment="Left" Margin="20,20,0,0" VerticalAlignment="Top" Width="100" Height="40" Click="Start_Click"/>
         <ListBox x:Name="Rate" HorizontalAlignment="Left" Height="425" Margin="840,20,0,0" VerticalAlignment="Top" Width="200"/>
         <Label x:Name="totalscore" Content="" HorizontalAlignment="Left" Margin="470,42,0,0" VerticalAlignment="Top" Width="245"/>
-        <Button x:Name="NameChange" Content="Change da Name" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="NameChange_Click"/>
+        <Button x:Name="NameChange" Content="Set da Name" HorizontalAlignment="Left" Margin="20,80,0,0" VerticalAlignment="Top" Width="100" Height="30" Click="NameChange_Click"/>
         <Label x:Name="PlayerName" Content="Вы играете за: " HorizontalAlignment="Left" Margin="160,42,0,0" VerticalAlignment="Top" RenderTransformOrigin="0,0.5" Width="230"/>
         <Label Content="ВАШ СЧЕТ:" HorizontalAlignment="Left" Margin="395,42,0,0" VerticalAlignment="Top" Width="70"/>
         <Button x:Name="Send" Content="Send the result" HorizontalAlignment="Left" Margin="840,465,0,0" VerticalAlignment="Top" Width="200" Height="40" Click="Send_Click"/>

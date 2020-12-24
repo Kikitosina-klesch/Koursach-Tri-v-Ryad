@@ -39,6 +39,7 @@ namespace Koursach_Tri_v_Ryad
         Random rng = new Random();
         const int w = 8;
         const int nulltipe = -99;
+        const int missscore = 5 * ((w - 2) * 3 * 8 * 2);
 
         JsonSaveLoadProgress j = new JsonSaveLoadProgress();
 
@@ -96,7 +97,7 @@ namespace Koursach_Tri_v_Ryad
                     elfield[i, j].b.Content = stack;
                 }
 
-            totalscore.Content = Convert.ToString(GameLog.getScore() - 1440);
+            totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
         }
 
         StackPanel getPanel(BitmapImage picture)
@@ -119,24 +120,32 @@ namespace Koursach_Tri_v_Ryad
 
             GameLog.moveCell(i, j);
 
-            totalscore.Content = Convert.ToString(GameLog.getScore() - 1440);
+            totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
 
             Update();
         }
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
+            string name = Convert.ToString(PlayerName.Content);
+
+            if (name != "Вы играете за: ")
+            {
                 GameLog.GameSetScore(0);
                 GameLog.Falled += Falled;
                 Update();
                 GameLog.StartFall();
+            }
+            else
+                MessageBox.Show("У вас пустое имечко(((");
+               
         }
 
         private void TriDyad_Click(object sender, RoutedEventArgs e)
         {
             GameLog.TriVRyad();
 
-            totalscore.Content =Convert.ToString(GameLog.getScore() -1440);
+            totalscore.Content =Convert.ToString(GameLog.getScore() - missscore);
 
             Update();
         }
@@ -186,6 +195,9 @@ namespace Koursach_Tri_v_Ryad
             //scorelist.Add(p.score);
             foreach (Player p in sortedPlayers)
                 Rate.Items.Add(p.name + ":     " + p.score);
+
+            PlayerName.Content = "";
+            totalscore.Content = "";
         }
 
         private void Save_Click(object sender, RoutedEventArgs e)
