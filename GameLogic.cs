@@ -16,6 +16,7 @@ namespace Koursach_Tri_v_Ryad
 
         const int w = 8;
         const int nulltipe = -99;
+        const int blocktype = -88;
         const int moves = 3;
         public bool endgame { get; set; }
 
@@ -50,7 +51,7 @@ namespace Koursach_Tri_v_Ryad
                 {
                     FallCells();
                     Falled(this, null);
-                    Thread.Sleep(300);
+                    Thread.Sleep(500);
                 }
                 StartFall();
             }
@@ -65,7 +66,7 @@ namespace Koursach_Tri_v_Ryad
                     {
                         for (int y = 0; y < w; y++)
                         {
-                            gamefield[x, y].typeofpic = nulltipe;
+                            gamefield[x, y].typeofpic = blocktype;
                         }
                     }
 

@@ -39,6 +39,7 @@ namespace Koursach_Tri_v_Ryad
         Random rng = new Random();
         const int w = 8;
         const int nulltipe = -99;
+        const int blocktype = -88;
         const int missscore = 5 * ((w - 2) * 3 * 8 * 2);
 
         JsonSaveLoadProgress j = new JsonSaveLoadProgress();
@@ -90,8 +91,14 @@ namespace Koursach_Tri_v_Ryad
                     int typeel = elfield[i, j].typeofpic;
                     if(typeel != nulltipe)
                     {
-                        BitmapImage image = typedpic[typeel];
-                        stack = getPanel(image);
+                        if (typeel == blocktype)
+                            elfield[i, j].b.IsEnabled = false;
+                        else
+                        {
+                            BitmapImage image = typedpic[typeel];
+                            stack = getPanel(image);
+                        }
+                        
                     }
 
                     elfield[i, j].b.Content = stack;
