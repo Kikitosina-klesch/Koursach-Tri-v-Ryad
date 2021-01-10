@@ -35,18 +35,18 @@ namespace Koursach_Tri_v_Ryad
 
         Element[,] elfield = new Element[w, w];
         GameLogic GameLog;
-        List<string> names = new List<string>();
-        Random rng = new Random();
+        
+        
         const int w = 8;
         const int nulltipe = -99;
-        const int blocktype = -88;
-        const int missscore = 5 * ((w - 2) * 3 * 8 * 2);
+        const int missscore = 5 * ((w - 2) * 3 * w * 2);
+        const int moves = 10;
 
         JsonSaveLoadProgress j = new JsonSaveLoadProgress();
 
         Player p;
         List<Player> ratelist = new List<Player>();
-        List<int> scorelist = new List<int>();
+       
         public MainWindow()
         {
             ratelist.Clear();
@@ -63,15 +63,7 @@ namespace Koursach_Tri_v_Ryad
 
             GameLog = new GameLogic(elfield);
 
-            for (int i = 0; i < w; i++)
-                for (int j = 0; j < w; j++)
-                {
-                    elfield[i, j] = new Element(nulltipe, i + j * w);
-                    StackPanel stackPanel = new StackPanel();                   
-                    stackPanel.Margin = new Thickness(1);
-                    elfield[i, j].b.Click += Btn_Click;
-                    unigrid.Children.Add(elfield[i, j].b);
-                }
+            
         }
         private void Falled(object sender, EventArgs args)
         {
@@ -91,14 +83,9 @@ namespace Koursach_Tri_v_Ryad
                     int typeel = elfield[i, j].typeofpic;
                     if(typeel != nulltipe)
                     {
-                        if (typeel == blocktype)
-                            elfield[i, j].b.IsEnabled = false;
-                        else
-                        {
-                            BitmapImage image = typedpic[typeel];
-                            stack = getPanel(image);
-                        }
-                        
+                        BitmapImage image = typedpic[typeel];
+                        stack = getPanel(image);
+
                     }
 
                     elfield[i, j].b.Content = stack;
@@ -106,6 +93,9 @@ namespace Koursach_Tri_v_Ryad
 
             totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
             Lefthod.Content = "ОСТАЛОСЬ ХОДОВ: " + GameLog.movesleft;
+
+            if (GameLog.getMovesleft() == 0)
+                unigrid.Children.Clear();
         }
 
         StackPanel getPanel(BitmapImage picture)
@@ -129,8 +119,6 @@ namespace Koursach_Tri_v_Ryad
             GameLog.moveCell(i, j);
 
             totalscore.Content = Convert.ToString(GameLog.getScore() - missscore);
-            
-
             Update();
         }
 
@@ -140,7 +128,19 @@ namespace Koursach_Tri_v_Ryad
 
             if (name != "Вы играете за: ")
             {
+                for (int i = 0; i < w; i++)
+                    for (int j = 0; j < w; j++)
+                    {
+                        elfield[i, j] = new Element(nulltipe, i + j * w);
+                        StackPanel stackPanel = new StackPanel();
+                        stackPanel.Margin = new Thickness(1);
+                        elfield[i, j].b.Click += Btn_Click;
+                        unigrid.Children.Add(elfield[i, j].b);
+                    }
+
+
                 GameLog.GameSetScore(0);
+                GameLog.setMovesLeft(moves);
                 GameLog.Falled += Falled;
                 Update();
                 GameLog.StartFall();
@@ -174,40 +174,36 @@ namespace Koursach_Tri_v_Ryad
             }
         }
 
-        private void Send_Click(object sender, RoutedEventArgs e)
+        private void Save_Click(object sender, RoutedEventArgs e)
         {
             Rate.Items.Clear();
             p.setScore(Convert.ToInt32(totalscore.Content));
 
             ratelist.Add(p);
-            //ratelist.Sort();
 
             var sortedPlayers = from r in ratelist
                                 orderby r.score descending
                                 select r;
 
-            //scorelist.Add(p.score);
             foreach (Player p in sortedPlayers)
                 Rate.Items.Add(p.name + ":     " + p.score);
 
             PlayerName.Content = "";
             totalscore.Content = "";
-        }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
-        {
             j.SaveFile(ratelist);
         }
 
         private void Load_Click_1(object sender, RoutedEventArgs e)
         {
+            Rate.Items.Clear();
+
             ratelist = j.LoadFile();
 
             var sortedPlayers = from r in ratelist
                                 orderby r.score descending
                                 select r;
 
-            //scorelist.Add(p.score);
             foreach (Player p in sortedPlayers)
                 Rate.Items.Add(p.name + ":     " + p.score);
         }

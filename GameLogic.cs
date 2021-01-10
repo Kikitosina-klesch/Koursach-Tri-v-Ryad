@@ -16,7 +16,6 @@ namespace Koursach_Tri_v_Ryad
 
         const int w = 8;
         const int nulltipe = -99;
-        const int blocktype = -88;
         const int moves = 10;
         public bool endgame { get; set; }
 
@@ -26,8 +25,8 @@ namespace Koursach_Tri_v_Ryad
         bool gamefieldzamena;
         public int score { get; set; }
         public int finalscore { get; set; }
-        const int missscore = 5 * ((w - 2) * 3 * 8 * 2);
-        Player p;
+        const int missscore = 5 * ((w - 2) * 3 * w * 2);
+        
 
         public void GameSetScore(int score)
         {
@@ -35,7 +34,6 @@ namespace Koursach_Tri_v_Ryad
         }
 
         List<Element> SovpadEl = new List<Element>();
-        //public List<string> names { get; set; }
 
         Random rng = new Random();
 
@@ -43,7 +41,6 @@ namespace Koursach_Tri_v_Ryad
 
         private void FallCellsss() 
         {
-            //endgame = false;
             TriVRyad();
             if (Hasnullpic())
             {
@@ -51,7 +48,7 @@ namespace Koursach_Tri_v_Ryad
                 {
                     FallCells();
                     Falled(this, null);
-                    Thread.Sleep(500);
+                    Thread.Sleep(200);
                 }
                 StartFall();
             }
@@ -60,17 +57,9 @@ namespace Koursach_Tri_v_Ryad
                 if (movesleft == 0)
                 {
                     MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - missscore));
-                    score = 1440;
 
-                    for (int x = 0; x < w; x++)
-                    {
-                        for (int y = 0; y < w; y++)
-                        {
-                            gamefield[x, y].typeofpic = blocktype;
-                        }
-                    }
-
-                    movesleft = moves;
+                    
+                    score = missscore;
                 }
             }
         }
@@ -91,9 +80,14 @@ namespace Koursach_Tri_v_Ryad
             return score;
         }
 
-        public int getMovesLeft()
+        public int getMovesleft()
         {
             return movesleft;
+        }
+
+        public void setMovesLeft(int movesleft)
+        {
+            this.movesleft = movesleft;
         }
 
         public void moveCell(int i, int j)
