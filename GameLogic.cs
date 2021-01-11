@@ -48,7 +48,7 @@ namespace Koursach_Tri_v_Ryad
                 {
                     FallCells();
                     Falled(this, null);
-                    Thread.Sleep(200);
+                    Thread.Sleep(600);
                 }
                 StartFall();
             }
@@ -148,90 +148,134 @@ namespace Koursach_Tri_v_Ryad
             Element el = gamefield[0, 0];
             Element el1 = gamefield[0, 0];
 
+            #region первый вариант
+            //for (int i = 0; i < w; i++)
+            //{
+            //    count = 0;                
+            //    for (int j = 0; j < w; j++)
+            //    {
+            //        if (count == 0)
+            //        {
+            //            el = gamefield[i, j];
+            //            count = 1;
+            //        }
+            //        else if (count == 1)
+            //        {
+            //            if (gamefield[i, j].typeofpic == el.typeofpic)
+            //            {
+            //                el1 = gamefield[i, j];
+            //                count++;
+            //            }
+            //            else
+            //            {
+            //                el = gamefield[i, j];
+            //                count = 1;
+            //            }
+            //        }
+            //        else if (count > 1)
+            //        {
+            //            if (gamefield[i, j].typeofpic == el1.typeofpic)
+            //            {
+            //                SovpadEl.Add(el);
+            //                SovpadEl.Add(el1);
+            //                SovpadEl.Add(gamefield[i, j]);
+            //            }
+            //            else
+            //            {
+            //                el = gamefield[i, j];
+            //                count = 1;
+            //            }
+                            
+            //        }
+            //    }
+            //}
+            //for (int j = 0; j < w; j++)
+            //{
+            //    count = 0;               
+            //    for (int i = 0; i < w; i++)
+            //    {
+            //        if (count == 0)
+            //        {
+            //            el = gamefield[i, j];
+            //            count = 1;
+            //        }
+            //        else if (count == 1)
+            //        {
+            //            if (gamefield[i, j].typeofpic == el.typeofpic)
+            //            {
+            //                el1 = gamefield[i, j];
+            //                count++;
+            //            }
+            //            else
+            //            {
+            //                el = gamefield[i, j];
+            //                count = 1;
+            //            }
+            //        }
+            //        else if (count > 1)
+            //        {
+            //            if (gamefield[i, j].typeofpic == el1.typeofpic)
+            //            {
+            //                SovpadEl.Add(el);
+            //                SovpadEl.Add(el1);
+            //                SovpadEl.Add(gamefield[i, j]);
+            //            }
+            //            else
+            //            {
+            //                el = gamefield[i, j];
+            //                count = 1;
+            //            }
+
+            //        }
+            //    }
+            //}
+            #endregion
+
             for (int i = 0; i < w; i++)
             {
-                count = 0;                
+                int type = gamefield[0, i].typeofpic;
+                count = 1;
                 for (int j = 0; j < w; j++)
                 {
-                    if (count == 0)
-                    {
-                        el = gamefield[i, j];
+                    if ((type == gamefield[i, j].typeofpic) && (j != 0))
+                        count++;
+                    else
                         count = 1;
-                    }
-                    else if (count == 1)
+                    if (count > 2)
                     {
-                        if (gamefield[i, j].typeofpic == el.typeofpic)
-                        {
-                            el1 = gamefield[i, j];
-                            count++;
-                        }
-                        else
-                        {
-                            el = gamefield[i, j];
-                            count = 1;
-                        }
+                        SovpadEl.Add(gamefield[i, j - 2]);
+                        SovpadEl.Add(gamefield[i, j - 1]);
+                        SovpadEl.Add(gamefield[i, j]);
                     }
-                    else if (count > 1)
-                    {
-                        if (gamefield[i, j].typeofpic == el1.typeofpic)
-                        {
-                            SovpadEl.Add(el);
-                            SovpadEl.Add(el1);
-                            SovpadEl.Add(gamefield[i, j]);
-                        }
-                        else
-                        {
-                            el = gamefield[i, j];
-                            count = 1;
-                        }
-                            
-                    }
+                    type = gamefield[i, j].typeofpic;
                 }
+
             }
+
             for (int j = 0; j < w; j++)
             {
-                count = 0;               
+                int type = gamefield[j, 0].typeofpic;
+                count = 1;
                 for (int i = 0; i < w; i++)
                 {
-                    if (count == 0)
-                    {
-                        el = gamefield[i, j];
+                    if ((type == gamefield[i, j].typeofpic) && (i != 0))
+                        count++;
+                    else
                         count = 1;
-                    }
-                    else if (count == 1)
+                    if (count > 2)
                     {
-                        if (gamefield[i, j].typeofpic == el.typeofpic)
-                        {
-                            el1 = gamefield[i, j];
-                            count++;
-                        }
-                        else
-                        {
-                            el = gamefield[i, j];
-                            count = 1;
-                        }
+                        SovpadEl.Add(gamefield[i - 2, j]);
+                        SovpadEl.Add(gamefield[i - 1, j]);
+                        SovpadEl.Add(gamefield[i, j]);
                     }
-                    else if (count > 1)
-                    {
-                        if (gamefield[i, j].typeofpic == el1.typeofpic)
-                        {
-                            SovpadEl.Add(el);
-                            SovpadEl.Add(el1);
-                            SovpadEl.Add(gamefield[i, j]);
-                        }
-                        else
-                        {
-                            el = gamefield[i, j];
-                            count = 1;
-                        }
-
-                    }
+                    type = gamefield[i, j].typeofpic;
                 }
             }
-                foreach (Element elem in SovpadEl)
-                {
-                    elem.typeofpic = nulltipe;
-                }
+
+            foreach (Element elem in SovpadEl)
+            {
+                elem.typeofpic = nulltipe;
+            }
 
             score += SovpadEl.Count() * 5;
 
