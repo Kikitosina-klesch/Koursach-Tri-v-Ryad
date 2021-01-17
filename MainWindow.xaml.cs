@@ -33,20 +33,21 @@ namespace Koursach_Tri_v_Ryad
             new BitmapImage(new Uri(@"pack://application:,,,/imgs/5.png", UriKind.Absolute)),
         };
 
-        Element[,] elfield = new Element[w, w];
-        GameLogic GameLog;
+        Element[,] elfield = new Element[w, w]; //массив игровых ячеек
+        GameLogic GameLog; //переменная класса игровой механики
         
         
-        const int w = 8;
-        const int nulltipe = -99;
-        const int missscore = 5 * ((w - 2) * 3 * w * 2);
-        const int moves = 10;
+        const int w = 8; //константа размера поля
+        const int nulltipe = -99; //константа пустого типа ячеек
+        const int missscore = 5 * ((w - 2) * 3 * w * 2); //константа погрешности при подсчете очков
+        const int moves = 10; //константа числа ходов
 
-        JsonSaveLoadProgress j = new JsonSaveLoadProgress();
+        JsonSaveLoadProgress j = new JsonSaveLoadProgress(); // переменная класса сохранения и загрузки прогресса
 
-        Player p;
-        List<Player> ratelist = new List<Player>();
+        Player p; //переменная класса игрока
+        List<Player> ratelist = new List<Player>(); //список рейтинга игроков
        
+        //при запуске программы создается пустое поле
         public MainWindow()
         {
             ratelist.Clear();
@@ -65,6 +66,8 @@ namespace Koursach_Tri_v_Ryad
 
             
         }
+
+        //специальный метод для реализации автоматического падения
         private void Falled(object sender, EventArgs args)
         {
             Application.Current.Dispatcher.Invoke(delegate
@@ -73,6 +76,9 @@ namespace Koursach_Tri_v_Ryad
             });
         }
 
+        //вызывается при каждом изменении данных о типе картинок в игровом поле и отображает эти изменения,
+        //также отображает число очков и оставшиеся ходы
+        //при истеченнии ходов очищает игровое поле
         void Update()
         {            
             for (int i = 0; i < w; i++)
@@ -124,8 +130,10 @@ namespace Koursach_Tri_v_Ryad
 
         private void Start_Click(object sender, RoutedEventArgs e)
         {
-            string name = Convert.ToString(PlayerName.Content);
+            string name = Convert.ToString(PlayerName.Content); //получает введенное имя игрока из лейбла имени 
 
+            //если имя игрока присутсвует, то генерируется игровое поле 
+            //иначе сообщается, что имя не было введено
             if (name != "Вы играете за: ")
             {
                 for (int i = 0; i < w; i++)
@@ -139,21 +147,20 @@ namespace Koursach_Tri_v_Ryad
                     }
 
 
-                GameLog.GameSetScore(0);
-                GameLog.setMovesLeft(moves);
+                GameLog.GameSetScore(0); //устанавливается начальный счет
+                GameLog.setMovesLeft(moves); //устанавливается начальное чилсо ходов
                 GameLog.Falled += Falled;
                 Update();
                 GameLog.StartFall();
             }
             else
-                MessageBox.Show("У вас пустое имечко(((");
-               
+                MessageBox.Show("У вас пустое имечко(((");               
         }
 
         
         private void NameChange_Click(object sender, RoutedEventArgs e)
         {
-            bool proverka =true;
+            bool proverka = true;
             AddName win2 = new AddName();
             if (win2.ShowDialog() == true)
             {
@@ -200,6 +207,7 @@ namespace Koursach_Tri_v_Ryad
 
             ratelist = j.LoadFile();
 
+            //сортировка списка рейтинга по убыванию числа набранных очков
             var sortedPlayers = from r in ratelist
                                 orderby r.score descending
                                 select r;

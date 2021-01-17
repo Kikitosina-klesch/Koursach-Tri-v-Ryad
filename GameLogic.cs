@@ -10,24 +10,31 @@ namespace Koursach_Tri_v_Ryad
 {
     public class GameLogic
     {
-        Element[,] gamefield = new Element[w, w];
+        Element[,] gamefield = new Element[w, w]; //массив игровых ячеек
+        
+        // переменные координат которые понадобятся для перестановки ячеек
         int X = -1;
         int Y = -1;
 
-        const int w = 8;
-        const int nulltipe = -99;
-        const int moves = 10;
-        public bool endgame { get; set; }
-
-        public int movesleft = moves;
-        int gamefield1 = -1;
-        int gamefield2 = -1;
-        bool gamefieldzamena;
-        public int score { get; set; }
-        public int finalscore { get; set; }
-        const int missscore = 5 * ((w - 2) * 3 * w * 2);
+        const int w = 8; // размеры игрового поля
+        const int nulltipe = -99; //пустой тип ячейки, не содержащий картинку
+        const int moves = 10; // общие число ходов 
         
 
+        public int movesleft = moves; // число оставшихся ходов
+
+        // переменные типа картинок у ячеек которые понадобятся для перестановки ячеек
+        int gamefield1 = -1;
+        int gamefield2 = -1;
+
+        bool gamefieldzamena; //логическая переменная подтверждающая возможность перестановки
+        public int score { get; set; } //число заработанных очков
+
+        //константа необходима для устранения ошибки при подсчета очков, 
+        //т.к в начале игры все ячейки пустые он будет считать их совпадающими,
+        //данная формула устраняет данную ошибку даже если изменять количество ячеек на поле
+        const int missscore = 5 * ((w - 2) * 3 * w * 2); 
+        
         public void GameSetScore(int score)
         {
             this.score = score;
@@ -47,8 +54,8 @@ namespace Koursach_Tri_v_Ryad
                 while (Hasnullpic())
                 {
                     FallCells();
-                    Falled(this, null);
-                    Thread.Sleep(600);
+                    Falled(this, null);  
+                    Thread.Sleep(400); //задержка замены ячеек
                 }
                 StartFall();
             }
@@ -57,8 +64,6 @@ namespace Koursach_Tri_v_Ryad
                 if (movesleft == 0)
                 {
                     MessageBox.Show("ХОДЫ ЗАКОНЧИЛИСЬ :c \n ВАШЕ ЧИСЛО ОЧКОВ: " + (score - missscore));
-
-                    
                     score = missscore;
                 }
             }
@@ -66,6 +71,7 @@ namespace Koursach_Tri_v_Ryad
 
         public void StartFall()
         {
+            //осуществляет запуск автоматического сдвига ячеек вниз в отдельном потоке
             Thread newThread = new Thread(new ThreadStart(FallCellsss));
             newThread.Start();
         }
@@ -92,41 +98,45 @@ namespace Koursach_Tri_v_Ryad
 
         public void moveCell(int i, int j)
         {
-            
-            SovpadEl.Clear();            
+            SovpadEl.Clear(); //очистка списка ячеек для удаления            
 
+            //если переменные координат отрицательные, то в них записывается индекс массива ячеек
+            //записывается тип картинки для ее перестановки
             if ((X == -1) && (Y == -1))
             {
                 X = i;
                 Y = j;
                 gamefield1 = gamefield[i, j].typeofpic;
-            }
+            }           
             else
             {
+                //в случае если переменные содержат индексы осуществляется проверка для второй ячейки для замены
+                //если она ближайшая по вертикали и горизонтали, то происходит их замена
                 if (((X == i) && (Math.Abs(Y - j) == 1)) || ((Y == j) && (Math.Abs(X - i) == 1)))
                 {
                     gamefield2 = gamefield[i, j].typeofpic;                   
 
                     gamefield[X, Y].typeofpic = gamefield2;
                     gamefield[i, j].typeofpic = gamefield1;
-
+                    
+                    //получает число совпадающих ячеек                    
                     List<Element> row = TriVRyad();
+                    //если совпадения присутствуют то они удаляются
                     if (row.Count() != 0)
                     {
-                        TriVRyad();
-                       
+                        TriVRyad();                       
                     }
-                    movesleft--;
-                    gamefieldzamena = true;
+                    movesleft--; //отнимается ход
+                    gamefieldzamena = true; //переменная проверки на замену устанавливается положительной в случае ее выполнения
                 }
                 else
                 {
                     gamefieldzamena = false;
                 }
-
+                //если переменная перестановки положительна, то координаты становятся отрицательными 
+                //выполняется сдвиг ячеек вниз
                 if (gamefieldzamena == true)
                 {
-
                     X = -1;
                     Y = -1;
 
@@ -136,122 +146,39 @@ namespace Koursach_Tri_v_Ryad
                     StartFall();
                 }
             }
-
-            
         }
         public List<Element> TriVRyad()
         {            
-            SovpadEl.Clear();
+            SovpadEl.Clear(); //очистка списка совпадающих ячеек
 
-            int count;
-            
-            Element el = gamefield[0, 0];
-            Element el1 = gamefield[0, 0];
+            int count; //счетчик для определения количества похожих ячеек
 
-            #region первый вариант
-            //for (int i = 0; i < w; i++)
-            //{
-            //    count = 0;                
-            //    for (int j = 0; j < w; j++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            count = 1;
-            //        }
-            //        else if (count == 1)
-            //        {
-            //            if (gamefield[i, j].typeofpic == el.typeofpic)
-            //            {
-            //                el1 = gamefield[i, j];
-            //                count++;
-            //            }
-            //            else
-            //            {
-            //                el = gamefield[i, j];
-            //                count = 1;
-            //            }
-            //        }
-            //        else if (count > 1)
-            //        {
-            //            if (gamefield[i, j].typeofpic == el1.typeofpic)
-            //            {
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(el1);
-            //                SovpadEl.Add(gamefield[i, j]);
-            //            }
-            //            else
-            //            {
-            //                el = gamefield[i, j];
-            //                count = 1;
-            //            }
-                            
-            //        }
-            //    }
-            //}
-            //for (int j = 0; j < w; j++)
-            //{
-            //    count = 0;               
-            //    for (int i = 0; i < w; i++)
-            //    {
-            //        if (count == 0)
-            //        {
-            //            el = gamefield[i, j];
-            //            count = 1;
-            //        }
-            //        else if (count == 1)
-            //        {
-            //            if (gamefield[i, j].typeofpic == el.typeofpic)
-            //            {
-            //                el1 = gamefield[i, j];
-            //                count++;
-            //            }
-            //            else
-            //            {
-            //                el = gamefield[i, j];
-            //                count = 1;
-            //            }
-            //        }
-            //        else if (count > 1)
-            //        {
-            //            if (gamefield[i, j].typeofpic == el1.typeofpic)
-            //            {
-            //                SovpadEl.Add(el);
-            //                SovpadEl.Add(el1);
-            //                SovpadEl.Add(gamefield[i, j]);
-            //            }
-            //            else
-            //            {
-            //                el = gamefield[i, j];
-            //                count = 1;
-            //            }
-
-            //        }
-            //    }
-            //}
-            #endregion
-
+            //цикл проверки элементов по горизонтали
             for (int i = 0; i < w; i++)
             {
-                int type = gamefield[0, i].typeofpic;
+                int type = gamefield[0, i].typeofpic; //переменная сохраняет тип картинки
                 count = 1;
                 for (int j = 0; j < w; j++)
                 {
+                    //при совпадении картинок переменной и следующей ячейки увеличивается счетчик,
+                    //показывающий, сколько ячеек совпадают
+                    //иначе он остается равным 1
                     if ((type == gamefield[i, j].typeofpic) && (j != 0))
                         count++;
                     else
                         count = 1;
+                    //если совпадений больше чем 2, то ячейки записываются в список на удаление
                     if (count > 2)
                     {
                         SovpadEl.Add(gamefield[i, j - 2]);
                         SovpadEl.Add(gamefield[i, j - 1]);
                         SovpadEl.Add(gamefield[i, j]);
                     }
-                    type = gamefield[i, j].typeofpic;
+                    type = gamefield[i, j].typeofpic; //обновляем тип картинки ячейки на следующую
                 }
-
             }
 
+            //аналогичная функция проверки по вертикали
             for (int j = 0; j < w; j++)
             {
                 int type = gamefield[j, 0].typeofpic;
@@ -272,12 +199,13 @@ namespace Koursach_Tri_v_Ryad
                 }
             }
 
+            //для каждого элемента списка на удаление присваиваем тип пустой картинки ячейки
             foreach (Element elem in SovpadEl)
             {
                 elem.typeofpic = nulltipe;
             }
 
-            score += SovpadEl.Count() * 5;
+            score += SovpadEl.Count() * 5; //подсчет очков за каждое совпадение
 
             return SovpadEl;
         }
